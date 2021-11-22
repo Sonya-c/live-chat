@@ -1,9 +1,10 @@
 import React from 'react';
 import socketClient from "socket.io-client";
+import Messange from './Messange';
 
 const SERVER = "localhost:8080";
 
-export class App extends React.Component {
+export class Chat extends React.Component {
     state = {
         socket: null,
         input_value: '',
@@ -49,11 +50,11 @@ export class App extends React.Component {
     render() {
         return (
             <main>
-                <ul>{
+                <div className="messanges-container">{
                     this.state.messages.map((item, index) => {
-                        return <li key={index}> {item.value}</li>
+                        return <Messange key={index} />
                     })}
-                </ul>
+                </div>
 
                 <div>
                     <input type="text" onChange={this.handleInput} value={this.state.input_value} />
