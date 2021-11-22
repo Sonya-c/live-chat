@@ -4,22 +4,22 @@ import Messange from './Messange';
 
 const SERVER = "localhost:8080";
 
-export class Chat extends React.Component {
+class Chat extends React.Component {
     state = {
         socket: null,
         input_value: '',
         messages: []
     }
-  
+
     componentDidMount() {
         this.configureSocket();
     }
 
     configureSocket = () => {
-        var socket = socketClient (SERVER);
+        var socket = socketClient(SERVER);
 
         socket.on('connection', () => {
-            console.log("%cNew user conected!", "color: orange")  
+            console.log("%cNew user conected!", "color: orange")
         });
 
         socket.on('message', message => {
@@ -29,15 +29,15 @@ export class Chat extends React.Component {
             messages.push(message);
             this.setState({ messages });
         });
-        
+
         this.socket = socket;
     }
 
     send = () => {
         if (this.state.input_value && this.state.input_value !== '') {
             let text = this.state.input_value;
-            
-            this.socket.emit('send-message', {value: text});
+
+            this.socket.emit('send-message', { value: text });
 
             this.setState({ input_value: '' });
         }
@@ -64,3 +64,5 @@ export class Chat extends React.Component {
         )
     }
 }
+
+export default Chat;

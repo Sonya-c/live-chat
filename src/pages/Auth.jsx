@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import "../styles/Auth.css"
+import { useDispatch } from 'react-redux'
+
+import "../styles/Auth.css";
+import { login } from "../app/features/auth/authSlide";
 
 /**
  * Auth component
  */
 export default function Auth() {
     const [name, setName] = useState("");
+    const dispatch = useDispatch();
 
     /**
      * Verify if name is not empty
@@ -17,11 +21,12 @@ export default function Auth() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        dispatch(login(name));
     }
 
     return (
         <main>
-            <from className="login-form" onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={handleSubmit}>
 
                 <label
                     for="name">
@@ -42,7 +47,7 @@ export default function Auth() {
                     Ingresar
                 </button>
 
-            </from>
+            </form>
         </main>
     );
 }
