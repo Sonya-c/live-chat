@@ -1,10 +1,12 @@
 import React from 'react';
 import socketClient from "socket.io-client";
+import dotenv from 'dotenv';
 
 import Messange from './Messange';
 import "../styles/Chat.css";
 
-const SERVER = "localhost:8080";
+const SERVER = process.env.REACT_APP_SERVER_URL;
+console.log("%cServer " + SERVER, "color: red");
 
 class Chat extends React.Component {
 
