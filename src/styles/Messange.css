@@ -1,0 +1,8 @@
+.messange {
+    padding: 10px;
+}
+
+.messange .messange-username {
+    font-size: x-large;
+    font-weight: bold;
+}

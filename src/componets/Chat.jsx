@@ -1,16 +1,22 @@
 import React from 'react';
 import socketClient from "socket.io-client";
+
 import Messange from './Messange';
+import "../styles/Chat.css";
 
 const SERVER = "localhost:8080";
 
 class Chat extends React.Component {
-    state = {
-        socket: null,
-        input_value: '',
-        messages: []
-    }
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            socket: null,
+            input_value: '',
+            messages: []
+        }
+    }
     componentDidMount() {
         this.configureSocket();
     }
@@ -37,7 +43,11 @@ class Chat extends React.Component {
         if (this.state.input_value && this.state.input_value !== '') {
             let text = this.state.input_value;
 
-            this.socket.emit('send-message', { value: text });
+            this.socket.emit('send-message', {
+                value: text,
+                user_name: this.props.userName,
+                date: new Date()
+            });
 
             this.setState({ input_value: '' });
         }
@@ -49,15 +59,21 @@ class Chat extends React.Component {
 
     render() {
         return (
-            <main>
-                <div className="messanges-container">{
+            <main className="chat-app">
+                <div className="messange-zone">{
                     this.state.messages.map((item, index) => {
-                        return <Messange key={index} />
+                        return <Messange
+                            key={index}
+                            date={item.date}
+                            username={item.user_name}
+                            text={item.value} />
                     })}
                 </div>
 
-                <div>
-                    <input type="text" onChange={this.handleInput} value={this.state.input_value} />
+                <div className="typing-zone">
+                    <input type="text"
+                        onChange={this.handleInput}
+                        value={this.state.input_value} />
                     <button onClick={this.send}>Send</button>
                 </div>
             </main>

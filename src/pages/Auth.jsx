@@ -25,7 +25,7 @@ export default function Auth() {
     }
 
     return (
-        <main>
+        <main className="login-page">
             <form className="login-form" onSubmit={handleSubmit}>
 
                 <label
