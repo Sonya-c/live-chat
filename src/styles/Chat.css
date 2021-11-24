@@ -13,6 +13,7 @@ main.chat-app {
 }
 
 .messange-zone {
+    background-color: white;
     overflow-y: auto;
     height: calc(100% - 50px);
 }
