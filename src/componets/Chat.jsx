@@ -1,6 +1,5 @@
 import React from 'react';
 import socketClient from "socket.io-client";
-import dotenv from 'dotenv';
 
 import Messange from './Messange';
 import "../styles/Chat.css";
