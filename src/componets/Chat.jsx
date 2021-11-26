@@ -61,6 +61,7 @@ export default function Chat() {
                     value={input_value} />
 
                 <button onClick={(e) => onClickHandle(e)}>Send</button>
+                <a href="https://andreia-games.github.io/the-school-at-the-night/">Quiero Jugar</a>               
             </div>
         </main>
     )
