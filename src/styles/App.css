@@ -42,6 +42,15 @@ header .navigation {
     justify-content: center;
 
 }
+a{
+    border: none;
+    padding: 10px;
+    color: white;
+    background-color: blueviolet;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
 
 header .navigation li {
     list-style: none;
