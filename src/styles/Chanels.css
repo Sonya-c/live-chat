@@ -1,0 +1,14 @@
+.chanels {
+    width: 25%;
+    height: 100%;
+    background-color: rgb(27, 27, 27);
+}
+
+.user {
+    width: calc(100% - 20px);
+    margin: 10px;
+    background-color: rebeccapurple;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}

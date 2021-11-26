@@ -1,0 +1,9 @@
+.toogle-theme {
+    cursor: pointer;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: larger;
+    border: none;
+    border-radius: 5px;
+}

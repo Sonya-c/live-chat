@@ -1,8 +1,14 @@
 .messange {
     padding: 10px;
+    color: white;
+}
+
+.messange-date {
+    font-size: small;
+    color: lightgrey;
 }
 
 .messange .messange-username {
-    font-size: x-large;
-    font-weight: bold;
+    color: yellow;
+    font-size: large;
 }

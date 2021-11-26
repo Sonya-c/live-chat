@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import "../styles/Auth.css";
 import "../styles/Library.css";
-import { login } from "../app/features/auth/authSlide";
+
+import { login } from "../app/features/authSlide";
+import ToogleTheme from "../componets/ToogleTheme";
 
 /**
  * Auth component
  */
 export default function Auth() {
   const [name, setName] = useState("");
+  const theme = useSelector(state => state.theme.dark);
   const dispatch = useDispatch();
 
   /**
@@ -26,7 +29,7 @@ export default function Auth() {
   }
 
   return (
-    <main className="login-page">
+    <main className={"login-page " + (theme ? "dark" : "light")} >
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="center-text">
           <h1>Bienvenido</h1>
@@ -34,8 +37,7 @@ export default function Auth() {
           <p className="light-gray">Una nueva forma de comunicarse</p>
         </div>
         <hr />
-        <label
-          for="name">
+        <label>
           Nombre
         </label>
 
@@ -44,6 +46,7 @@ export default function Auth() {
           id="name"
           name="name"
           value={name}
+          onKeyPress={(e) => e.key === 'Enter' ? handleSubmit(e) : null}
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -53,7 +56,6 @@ export default function Auth() {
           Ingresar
         </button>
       </form>
-
     </main>
   );
 }

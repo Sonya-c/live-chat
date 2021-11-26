@@ -1,85 +1,67 @@
-import React from 'react';
-import socketClient from "socket.io-client";
+import React, { useEffect, useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SocketContext } from '../app/socket/Socekt';
 
 import Messange from './Messange';
 import "../styles/Chat.css";
 
-const SERVER = process.env.REACT_APP_SERVER_URL;
-console.log("%cServer " + SERVER, "color: red");
+export default function Chat() {
+    const username = useSelector(state => state.auth.user_name);
+    const [input_value, setValue] = useState("");
+    const [messages, setMessange] = useState([]);
+    const socket = useContext(SocketContext);
 
-class Chat extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            socket: null,
-            input_value: '',
-            messages: []
-        }
-    }
-    componentDidMount() {
-        this.configureSocket();
-    }
-
-    configureSocket = () => {
-        var socket = socketClient(SERVER);
-
-        socket.on('connection', () => {
-            console.log("%cNew user conected!", "color: orange")
-        });
-
+    useEffect(() => {
         socket.on('message', message => {
-            console.log("%cSend menssage!", "color: green");
-
-            let messages = this.state.messages;
-            messages.push(message);
-            this.setState({ messages });
+            console.log("%cGet menssage!", "color: green");
+            setMessange([...messages, message]);
         });
 
-        this.socket = socket;
-    }
+        return () => {
+            socket.off("message");
+        };
+    })
 
-    send = () => {
-        if (this.state.input_value && this.state.input_value !== '') {
-            let text = this.state.input_value;
-
-            this.socket.emit('send-message', {
-                value: text,
-                user_name: this.props.userName,
-                date: new Date()
-            });
-
-            this.setState({ input_value: '' });
+    function onClickHandle(event) {
+        event.preventDefault();
+        if (input_value && input_value !== '') {
+            send(socket, input_value, username);
+            setValue("");
         }
     }
 
-    handleInput = e => {
-        this.setState({ input_value: e.target.value });
+    const send = (socket, messange, username) => {
+        console.log("%cSend Messange!", "color: yellow")
+
+        socket.emit('send-message', {
+            value: messange,
+            user_name: username,
+            date: new Date()
+        });
     }
 
-    render() {
-        return (
-            <main className="chat-app">
-                <div className="messange-zone">{
-                    this.state.messages.map((item, index) => {
-                        return <Messange
-                            key={index}
-                            date={item.date}
-                            username={item.user_name}
-                            text={item.value} />
-                    })}
-                </div>
+    return (
+        <main className="chat">
+            <div className="messange-zone">{
 
-                <div className="typing-zone">
-                    <input type="text"
-                        onChange={this.handleInput}
-                        value={this.state.input_value} />
-                    <button onClick={this.send}>Send</button>
-                </div>
-            </main>
-        )
-    }
+                messages.map((item, index) => {
+                    return <Messange
+                        key={index}
+                        date={item.date}
+                        username={item.user_name}
+                        text={item.value} />
+                })}
+            </div>
+
+            <div className="typing-zone">
+
+                <input type="text"
+                    onKeyPress={(e) => e.key === 'Enter' ? onClickHandle(e) : null}
+                    onChange={(e) => setValue(e.target.value)}
+                    value={input_value} />
+
+                <button onClick={(e) => onClickHandle(e)}>Send</button>
+            </div>
+        </main>
+    )
 }
-
-export default Chat;

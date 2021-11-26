@@ -1,6 +1,14 @@
+main.login-page.dark {
+    background-image: url('../assets/img/background-dark.jpg');
+}
+
+main.login-page.light {
+    background-image: url('../assets/img/background-light.jpg');
+}
+
 main.login-page {
-    background-image: url('../assets/img/background.jpg');
-    background-repeat: none;
+    background-color: blueviolet;
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     margin: auto;
